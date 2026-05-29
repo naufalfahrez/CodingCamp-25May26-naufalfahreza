@@ -1,0 +1,585 @@
+/* ============================================================
+   Expense & Budget Visualizer — style.css
+   Mobile-first, CSS Variables, Dark/Light Mode
+   ============================================================ */
+
+/* ── 1. CSS VARIABLES (THEMES) ─────────────────────────────── */
+:root {
+  --bg-page:        #f4f6fb;
+  --bg-card:        #ffffff;
+  --bg-card-hover:  #f9fafb;
+  --bg-input:       #f1f5f9;
+  --border:         #e2e8f0;
+  --text-primary:   #0f172a;
+  --text-secondary: #64748b;
+  --text-muted:     #94a3b8;
+  --accent:         #6366f1;
+  --accent-hover:   #4f46e5;
+  --accent-light:   #eef2ff;
+  --danger:         #ef4444;
+  --danger-light:   #fef2f2;
+  --success:        #22c55e;
+  --warning:        #f59e0b;
+  --shadow-sm:      0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.05);
+  --shadow-md:      0 4px 12px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.05);
+  --radius-sm:      8px;
+  --radius-md:      14px;
+  --radius-lg:      20px;
+  --font:           'Segoe UI', system-ui, -apple-system, sans-serif;
+  --transition:     0.2s ease;
+}
+
+[data-theme="dark"] {
+  --bg-page:        #0f172a;
+  --bg-card:        #1e293b;
+  --bg-card-hover:  #263347;
+  --bg-input:       #0f172a;
+  --border:         #334155;
+  --text-primary:   #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted:     #64748b;
+  --accent:         #818cf8;
+  --accent-hover:   #6366f1;
+  --accent-light:   #1e1b4b;
+  --danger:         #f87171;
+  --danger-light:   #2d1515;
+  --shadow-sm:      0 1px 3px rgba(0,0,0,.3);
+  --shadow-md:      0 4px 12px rgba(0,0,0,.4);
+}
+
+/* ── 2. RESET & BASE ────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font);
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+  transition: background-color var(--transition), color var(--transition);
+}
+
+/* ── 3. LAYOUT ──────────────────────────────────────────────── */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 16px 16px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ── 4. HEADER ──────────────────────────────────────────────── */
+.app-header {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: background-color var(--transition);
+}
+
+.header-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-icon {
+  font-size: 1.5rem;
+}
+
+.brand-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.3px;
+}
+
+/* ── 5. CARD ────────────────────────────────────────────────── */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  transition: background-color var(--transition), border-color var(--transition);
+}
+
+.card-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 14px;
+  letter-spacing: -0.2px;
+}
+
+/* ── 6. BALANCE CARD ────────────────────────────────────────── */
+.balance-card {
+  background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%);
+  border: none;
+  text-align: center;
+  padding: 28px 20px;
+}
+
+.balance-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.75);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+.balance-amount {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -1px;
+  line-height: 1.2;
+}
+
+.balance-sub {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.65);
+  margin-top: 6px;
+}
+
+/* ── 7. ALERT CARD ──────────────────────────────────────────── */
+.alert-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.alert-row .input {
+  flex: 1;
+}
+
+.alert-hint {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+
+.alert-hint.active {
+  color: var(--warning);
+  font-weight: 500;
+}
+
+/* ── 8. FORM ────────────────────────────────────────────────── */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 12px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.input {
+  width: 100%;
+  padding: 10px 13px;
+  background: var(--bg-input);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-family: var(--font);
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition), background-color var(--transition);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
+  background: var(--bg-card);
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+.select {
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+}
+
+.form-error {
+  font-size: 0.82rem;
+  color: var(--danger);
+  min-height: 18px;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+/* ── 9. BUTTONS ─────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-family: var(--font);
+  cursor: pointer;
+  transition: background-color var(--transition), transform var(--transition), box-shadow var(--transition);
+  white-space: nowrap;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+  box-shadow: 0 4px 12px rgba(99,102,241,0.35);
+}
+
+.btn-secondary {
+  background: var(--accent-light);
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
+}
+
+.btn-secondary:hover {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+.btn-full {
+  width: 100%;
+}
+
+.btn-icon {
+  background: var(--bg-input);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background-color var(--transition), border-color var(--transition), transform var(--transition);
+}
+
+.btn-icon:hover {
+  background: var(--accent-light);
+  border-color: var(--accent);
+  transform: rotate(15deg);
+}
+
+/* ── 10. CONTENT GRID (List + Chart) ────────────────────────── */
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+/* ── 11. TRANSACTION LIST ───────────────────────────────────── */
+.list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.list-header .card-title {
+  margin-bottom: 0;
+}
+
+.sort-select {
+  width: auto;
+  font-size: 0.8rem;
+  padding: 7px 28px 7px 10px;
+}
+
+.tx-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 420px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.tx-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.tx-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tx-list::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+.tx-empty {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  padding: 30px 0;
+}
+
+/* ── 12. TRANSACTION ITEM ───────────────────────────────────── */
+.tx-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: background-color var(--transition), border-color var(--transition), transform var(--transition);
+  animation: slideIn 0.25s ease;
+}
+
+.tx-item:hover {
+  background: var(--bg-card-hover);
+  transform: translateX(2px);
+}
+
+/* Alert: transaksi melebihi limit */
+.tx-item.over-limit {
+  border-left: 4px solid var(--danger);
+  background: var(--danger-light);
+}
+
+.tx-item.over-limit .tx-amount {
+  color: var(--danger);
+  font-weight: 700;
+}
+
+.tx-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-input);
+  border-radius: var(--radius-sm);
+}
+
+.tx-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.tx-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tx-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.tx-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.tx-amount {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.btn-delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  padding: 2px 5px;
+  border-radius: 4px;
+  transition: color var(--transition), background-color var(--transition);
+  line-height: 1;
+}
+
+.btn-delete:hover {
+  color: var(--danger);
+  background: var(--danger-light);
+}
+
+/* ── 13. CHART CARD ─────────────────────────────────────────── */
+.chart-wrapper {
+  position: relative;
+  max-width: 260px;
+  margin: 0 auto;
+}
+
+.chart-empty {
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 10px;
+}
+
+/* ── 14. FOOTER ─────────────────────────────────────────────── */
+.app-footer {
+  text-align: center;
+  padding: 20px 16px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+}
+
+/* ── 15. ANIMATIONS ─────────────────────────────────────────── */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── 16. RESPONSIVE — DESKTOP ───────────────────────────────── */
+@media (min-width: 640px) {
+  .container {
+    padding: 24px 24px 60px;
+    gap: 20px;
+  }
+
+  .balance-amount {
+    font-size: 2.8rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .content-grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+
+  .chart-wrapper {
+    max-width: 220px;
+  }
+}
+
+@media (min-width: 900px) {
+  .header-inner,
+  .container {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+
+/* ── 17. CATEGORY SUMMARY ───────────────────────────────────── */
+.summary-section {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.summary-row {
+  display: grid;
+  grid-template-columns: 22px 1fr auto auto auto;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+}
+
+.summary-icon {
+  font-size: 1rem;
+  text-align: center;
+}
+
+.summary-cat {
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.summary-bar-wrap {
+  background: var(--bg-input);
+  border-radius: 99px;
+  height: 6px;
+  overflow: hidden;
+  min-width: 40px;
+}
+
+.summary-bar {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.4s ease;
+}
+
+.summary-pct {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  min-width: 30px;
+  text-align: right;
+}
+
+.summary-amt {
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  text-align: right;
+}

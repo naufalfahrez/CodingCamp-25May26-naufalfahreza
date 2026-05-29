@@ -1,0 +1,157 @@
+# Expense & Budget Visualizer — Project Spec
+
+## Overview
+A mobile-first web application for tracking daily expenses, built as part of the
+CodingCamp (Batch: 25 May 2026) assignment. The app lets users log transactions,
+visualize spending by category, and manage a personal budget limit — all client-side,
+no backend required.
+
+---
+
+## Project Structure
+
+```
+CodingCamp-25May26-[name]/
+├── index.html          ← App markup (root)
+├── css/
+│   └── style.css       ← All styles (1 file only)
+├── js/
+│   └── app.js          ← All logic (1 file only)
+└── .kiro/              ← Kiro workspace (required for submission)
+```
+
+---
+
+## Tech Stack
+
+- **HTML5** — semantic structure, ARIA accessibility
+- **CSS3** — CSS Variables, Flexbox, Grid, mobile-first responsive
+- **Vanilla JavaScript** — no frameworks, no build tools
+- **Chart.js v4.4.0** — pie chart via CDN
+- **LocalStorage API** — client-side persistence
+
+---
+
+## Constraints
+
+### TC-1: Technology Stack
+- HTML for structure
+- CSS for styling
+- Vanilla JavaScript only (no React, Vue, Angular, etc.)
+- No backend server
+
+### TC-2: Data Storage
+- Browser LocalStorage API only
+- All data stored client-side
+
+### TC-3: Browser Compatibility
+- Chrome, Firefox, Edge, Safari (modern versions)
+
+### Folder Rules
+- Only 1 CSS file inside `css/`
+- Only 1 JavaScript file inside `js/`
+
+---
+
+## Data Model
+
+Each transaction is stored as an object in a JavaScript array:
+
+```js
+{
+  id:       Number,   // Date.now() — unique timestamp ID
+  name:     String,   // Item name (sanitized)
+  amount:   Float,    // Positive number only
+  category: String    // "Food" | "Transport" | "Fun" | "Other"
+}
+```
+
+State is persisted to LocalStorage on every add/delete operation.
+
+---
+
+## Features
+
+### MVP (Required)
+
+| Feature | Implementation |
+|---|---|
+| Input Form | Fields: name, amount, category — with full validation |
+| Input Validation | Blocks empty fields, negative values, and zero amounts |
+| Transaction List | Scrollable, shows name + amount + category + timestamp |
+| Delete Transaction | Event delegation on list, filters state array by id |
+| Total Balance | `.reduce()` on transactions array, formatted as Rupiah |
+| Pie Chart | Chart.js, updates via `.update()` — canvas never destroyed |
+| LocalStorage | Auto-save on every state mutation |
+
+### Optional Challenges (All 5 Implemented)
+
+| Challenge | Detail |
+|---|---|
+| 🌙 Dark/Light Mode | CSS `data-theme` attribute toggle, preference saved to LocalStorage |
+| 🔃 Sort Transactions | Dropdown: Newest / Highest Amount / Lowest Amount |
+| 🚨 Spending Alert Limit | Input sets `spendingLimit`; items over limit get `.over-limit` CSS class (red border + red text) |
+| 📦 Custom Categories | "Other" category added alongside Food, Transport, Fun |
+| 📊 Category Summary | Progress bar breakdown per category rendered below pie chart |
+
+---
+
+## UI/UX Spec
+
+- **Design style**: Card-based, clean, minimal (shadcn/Tailwind-inspired, vanilla CSS)
+- **Typography**: System UI font stack, high readability
+- **Color system**: CSS Variables — single source of truth for light and dark themes
+- **Responsive**: 1-column on mobile, 2-column grid (list + chart) on desktop ≥ 768px
+- **Animations**: Slide-in on new transaction items, smooth chart transitions (500ms)
+- **Accessibility**: ARIA labels on interactive elements, `role="alert"` on form errors
+
+---
+
+## Key Functions (js/app.js)
+
+| Function | Purpose |
+|---|---|
+| `loadFromStorage()` | Load transactions, limit, and theme from LocalStorage on init |
+| `saveTransactions()` | Persist state array to LocalStorage |
+| `renderAll()` | Master render — calls balance, list, chart, summary |
+| `renderBalance()` | Calculate total with `.reduce()`, update DOM |
+| `renderTransactions()` | Build transaction list HTML, apply `.over-limit` class |
+| `renderSummary()` | Render per-category progress bar breakdown |
+| `initChart()` | Initialize Chart.js pie chart once on page load |
+| `updateChart()` | Mutate `chart.data` and call `chart.update()` — no destroy |
+| `handleAddTransaction()` | Validate form, create tx object, push to state, save, render |
+| `handleDeleteTransaction()` | Event delegation delete, filter state, save, render |
+| `handleSetLimit()` | Parse and save spending limit, re-render list |
+| `handleThemeToggle()` | Toggle `data-theme`, update chart legend color, save to storage |
+| `handleSortChange()` | Update `sortOrder`, re-render list |
+| `escapeHtml()` | XSS sanitization for all dynamic text output |
+
+---
+
+## LocalStorage Keys
+
+| Key | Value |
+|---|---|
+| `ebv_transactions` | JSON array of transaction objects |
+| `ebv_limit` | Spending limit as string (float) |
+| `ebv_theme` | `"light"` or `"dark"` |
+
+---
+
+## Submission Checklist
+
+- [ ] All MVP features working
+- [ ] At least 3 optional challenges implemented (we did all 5)
+- [ ] `.kiro` folder present in repository
+- [ ] Code pushed to GitHub with correct repo name format:
+      `CodingCamp-25May26-[participantname]`
+- [ ] GitHub Pages deployed and live
+- [ ] AWS Builder ID ready
+- [ ] Paperform submitted with: Builder ID + GitHub Repo URL + GitHub Pages URL
+
+---
+
+## Deadline
+
+**Saturday, 31 May 2026 at 23:59 WIB**
+Submission form opens on Thursday via Paperform.
